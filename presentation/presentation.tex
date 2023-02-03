@@ -1,0 +1,75 @@
+\documentclass{beamer}
+\usepackage{bm}
+\usetheme{Darmstadt}
+\title{Dissipation and dispersion in finite difference solutions of hyperbolic PDEs}
+\subtitle{Numerical solutions of PDEs}
+\author{Gabriele Cimador}
+\institute{Data Science and Scientific computing at Università di Trieste}
+\date{\today}
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+\begin{frame}
+\frametitle{Summary}
+\tableofcontents
+\end{frame}
+\section{Hyperbolic problems}
+\subsection{What is an hyperbolic problem?}
+\begin{frame}
+Usually transport wave-like phenomena with finite speed of propagation. Examples:
+\begin{itemize}
+  \item 1d transport/advection eq. $u_t + a u_x = 0$
+  \item Conservation laws $u_t + (f(u))_x = 0$
+  \item Wave eq. $u_{tt} + cu_{xx} = 0$
+\end{itemize}
+\end{frame}
+\begin{frame}
+All of the prevoius can be grouped with the general tranport system of equations:
+\begin{align*}
+\bm{u}_t + A\bm{u}_x = 0
+\end{align*}
+where $A$ matrix which can depend on $t, x, \bm{u}$ and has a full set of real eigenvalues.
+\\ e.g. for the conservation law equation
+\begin{align*}
+u_t + (f(u))_x = 0 \Rightarrow u_t + A(u)u_x = 0
+\end{align*}
+ where $A(u) = \frac{\partial f}{\partial u}$.
+\end{frame}
+\subsection{Some comments}
+\begin{frame}
+\begin{itemize}
+  \item There is no dissipation: $\lVert u(t,\cdot) \rVert_{L_2} = \lVert u_0\rVert_{L_2}$
+  \item Information propagates at finite speed
+  \item Discontinuites in initial data is propagated $\Rightarrow$ discontinue solution
+  \item CFL condition necessary for convergence of a finite difference scheme
+\end{itemize}
+\end{frame}
+\section{Advection equation}
+\begin{frame}
+\frametitle{Advection equation}
+We consider the advection equation equipped with initial and boundary condition:
+$$
+\begin{cases}
+u_t + a u_x = 0, & x,t \in [a,b] \times [0,T_f] \\
+u(0,x) = u_0, & x \in [a,b]
+\end{cases}
+$$
+The boundary condition depends on the sign of $a$. e.g. if $a > 0$ the boundary condition reads $u(a,t) = f(t) \ \forall \ t \ \in [0,T_f]$
+\end{frame}
+\section{Upwind method}
+\begin{frame}
+\frametitle{Upwind method}
+If $U_j^n$ is a mesh function approximating $u$ solution of PDE over a discretisation of $[a,b] \times [0,T_f]$ with space step $h$ and time step $\tau$, then:
+$$
+U_j^{n+1} =
+\begin{cases}
+(1 - \nu) U_j^n + \nu U_{j - 1}^n & \text{if } a > 0 \\
+(1 + \nu) U_j^n - \nu U_{j + 1}^n & \text{if } a < 0
+\end{cases}
+$$
+where $\nu = a \frac{\tau}{h}, n = 0, ..., N_t - 1$
+\end{frame}
+\begin{frame}
+\end{frame}
+\end{document}
