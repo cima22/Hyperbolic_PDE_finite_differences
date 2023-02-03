@@ -45,6 +45,36 @@ u_t + (f(u))_x = 0 \Rightarrow u_t + A(u)u_x = 0
   \item CFL condition necessary for convergence of a finite difference scheme
 \end{itemize}
 \end{frame}
+\section{Finite differences}
+\begin{frame}
+\frametitle{Finite differences}
+If the PDE is defined in a domain $I \times \Omega$ where $I$ is the time interval $[0, T_f]$ and $\Omega$ is the space domain of one variable $[a,b]$, we can discretize the PDE domain with $N_t \times N_x$ points. We can than define a general explicit difference scheme at time $t = t_n$ as
+\begin{align*}
+v_j^{n+1} = \sum_{i = -l}^r \beta_i v_{j+i}^n
+\end{align*}
+where $j = l, ..., N_x - r -1$, $n = 0, ..., N_t$ and $v_j^n$ is a mesh function over the discretised domain.
+\end{frame}
+\begin{frame}
+If: \begin{itemize}
+\item PDE has constant coefficients
+\item Problem is defined on infinte mesh or has periodic boundary conditions
+\end{itemize}
+Can perform a Fourier analysis of how the difference scheme acts on the initial condition. \\ If $\hat{v}(t,\xi)$ is Fourier transform of the solution, we have $v(t,x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t,\xi)d\xi$ \\
+\end{frame}
+\begin{frame}
+The difference scheme gives
+\begin{align*}
+\int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t + \tau,\xi)d\xi = & \sum_{i=-l}^{r}\beta_i\int_{-\infty}^{\infty}e^{\iota\xi (x + ih)}\hat{v}(t,\xi)d\xi \\
+= & \int_{-\infty}^{\infty} \sum_{i=-l}^{r}\beta_i e^{\iota\xi (x + ih)}\hat{v}(t,\xi)d\xi \\
+\end{align*}
+\begin{align*}
+\Rightarrow \hat{v}(t + \tau, \xi) = g(\zeta)\hat{v}(t,\xi), \\
+\zeta = \xi h, \ \tau = \frac{T_f}{N_t}, \ h = \frac{b - a}{N_x}
+\end{align*}
+\end{frame}
+\begin{frame}
+the amplification factor
+\end{frame}
 \section{Advection equation}
 \begin{frame}
 \frametitle{Advection equation}
@@ -71,5 +101,6 @@ $$
 where $\nu = a \frac{\tau}{h}, n = 0, ..., N_t - 1$
 \end{frame}
 \begin{frame}
+tau
 \end{frame}
 \end{document}
