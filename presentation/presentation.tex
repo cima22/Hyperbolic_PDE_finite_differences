@@ -59,48 +59,69 @@ If: \begin{itemize}
 \item PDE has constant coefficients
 \item Problem is defined on infinte mesh or has periodic boundary conditions
 \end{itemize}
-Can perform a Fourier analysis of how the difference scheme acts on the initial condition. \\ If $\hat{v}(t,\xi)$ is Fourier transform of the solution, we have $v(t,x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t,\xi)d\xi$ \\
+Can perform a Fourier analysis of how the difference scheme acts on the initial condition. \\ If $\hat{v}(t,\xi)$ is Fourier transform of the solution, we have
+\begin{align*}
+v(t,x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t,\xi)d\xi
+\end{align*}
 \end{frame}
 \begin{frame}
 The difference scheme gives
 \begin{align*}
 \int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t + \tau,\xi)d\xi = & \sum_{i=-l}^{r}\beta_i\int_{-\infty}^{\infty}e^{\iota\xi (x + ih)}\hat{v}(t,\xi)d\xi \\
-= & \int_{-\infty}^{\infty} \sum_{i=-l}^{r}\beta_i e^{\iota\xi (x + ih)}\hat{v}(t,\xi)d\xi \\
+= & \int_{-\infty}^{\infty} \left(\sum_{i=-l}^{r}\beta_i e^{\iota\xi ih}\right) e^{\iota \xi x}\hat{v}(t,\xi)d\xi \\
+\sum_{i=-l}^{r}\beta_i e^{\iota\xi ih} = g(\zeta) \ \Rightarrow & \ \hat{v}(t + \tau, \xi) = g(\zeta)\hat{v}(t,\xi)
 \end{align*}
-\begin{align*}
-\Rightarrow \hat{v}(t + \tau, \xi) = g(\zeta)\hat{v}(t,\xi), \\
-\zeta = \xi h, \ \tau = \frac{T_f}{N_t}, \ h = \frac{b - a}{N_x}
-\end{align*}
+$\zeta = \xi h, \ \tau = \frac{T_f}{N_t}, \ h = \frac{b - a}{N_x}$
 \end{frame}
 \begin{frame}
-the amplification factor
+$g(\zeta)$ is the \textbf{amplification factor} and $\hat{v}(t,\xi) = g(\zeta)^n\hat{v}(0,\xi)$
+\begin{itemize}
+\item $\|g\| \Rightarrow$ analysis of dissipation of wave numbers
+\item $Arg(g) \Rightarrow$ analysis of dispersion of wave numbers
+\end{itemize}
+Dissipation and dispersion in the finite difference scheme can occur even if the PDE has not these characteristics.
 \end{frame}
 \section{Advection equation}
 \begin{frame}
 \frametitle{Advection equation}
-We consider the advection equation equipped with initial and boundary condition:
+Consider the advection equation equipped with initial and boundary condition:
 $$
 \begin{cases}
 u_t + a u_x = 0, & x,t \in [a,b] \times [0,T_f] \\
 u(0,x) = u_0, & x \in [a,b]
 \end{cases}
 $$
-The boundary condition depends on the sign of $a$. e.g. if $a > 0$ the boundary condition reads $u(a,t) = f(t) \ \forall \ t \ \in [0,T_f]$
+Boundary condition depends on the sign of $a$. e.g. if $a > 0$ the boundary condition reads $u(a,t) = f(t) \ \forall \ t \ \in [0,T_f]$
 \end{frame}
 \section{Upwind method}
 \begin{frame}
 \frametitle{Upwind method}
-If $U_j^n$ is a mesh function approximating $u$ solution of PDE over a discretisation of $[a,b] \times [0,T_f]$ with space step $h$ and time step $\tau$, then:
-$$
+Considering a discretization of $[0,T_f] \times [a,b]$ and that $U_j^n$ is mesh function approximating $u$ solution of PDE we can discretize the operators as follows:
+\[
+\begin{cases}
+\displaystyle{\frac{U_j^{n+1} - U_j^n}{\tau} = \frac{U_j^n - U_{j-1}^n}{h}}, & \text{if } a > 0 \\ 
+\\
+\displaystyle{\frac{U_j^{n+1} - U_j^n}{\tau} = \frac{U_{j+1}^n - U_j^n}{h}}, & \text{if } a < 0
+\end{cases}
+\]
+$n = 0, ..., N_t - 1$
+\end{frame}
+\begin{frame}
+\frametitle{Upwind method}
+Can be rewritten as:
+\[
 U_j^{n+1} =
 \begin{cases}
 (1 - \nu) U_j^n + \nu U_{j - 1}^n & \text{if } a > 0 \\
 (1 + \nu) U_j^n - \nu U_{j + 1}^n & \text{if } a < 0
 \end{cases}
-$$
-where $\nu = a \frac{\tau}{h}, n = 0, ..., N_t - 1$
+\]
+where $\nu = a \displaystyle{\frac{\tau}{h}}, \ n = 0, ..., N_t - 1$
 \end{frame}
 \begin{frame}
-tau
+Amplification factor is $(1 - |\nu|) + |\nu| e^{\iota \xi h}$:
+\begin{itemize}
+\item $ \|g(\xi)\| \ \leq \ 1 \ \forall \ \xi \iff  0 \leq |\nu| \leq 1$
+\end{itemize}
 \end{frame}
 \end{document}
