@@ -1,5 +1,7 @@
 \documentclass{beamer}
 \usepackage{bm}
+\usepackage{graphicx}
+%\graphicspath{ {./images/} }
 \usetheme{Darmstadt}
 \title{Dissipation and dispersion in finite difference solutions of hyperbolic PDEs}
 \subtitle{Numerical solutions of PDEs}
@@ -127,6 +129,9 @@ Amplification factor for $a > 0$ is $g(\zeta) = (1 - \nu) + \nu e^{-\iota \xi h}
 \end{itemize}
 \end{frame}
 \begin{frame}
+\includegraphics[width=\textwidth]{up_g}
+\end{frame}
+\begin{frame}
 Dissipation can be explained also as follows:
 \begin{align*}
 0 \ = \ & \frac{U_j^{n+1} - U_j^n}{\tau} + a \frac{U_j^n - U_{j-1}^n}{h} = \\
@@ -155,5 +160,20 @@ g(\zeta) = 1 - 2 \eta^2\sin^2{\frac{1}{2}\zeta} - \iota \eta \sin{\zeta}
 \item $|g|^2 = 1 - 4\nu^2(1-\nu^2)\sin^4{\frac{1}{2}\zeta} \ \leq 1 \iff |\nu| \leq 1$ \\ Order of amplitude error $\zeta^4$ when $\zeta = h\xi$ small
 \item $Arg(g) = \displaystyle{-\tan^{-1}{\frac{\nu \sin{\zeta}}{1 - 2\nu^2\sin^2{\frac{1}{2}\zeta}}}}$
 \end{itemize}
+\end{frame}
+\begin{frame}
+\includegraphics[width=\textwidth]{lw_g}
+\end{frame}
+\begin{frame}
+talk about phase lag of lw and numerical $u_{xxx}$
+\end{frame}
+\begin{frame}
+variable coeff up and lw
+\end{frame}
+\begin{frame}
+leap frog and box?
+\end{frame}
+\begin{frame}
+conservation law - burgers
 \end{frame}
 \end{document}
