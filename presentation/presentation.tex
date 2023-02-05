@@ -81,7 +81,6 @@ $g(\zeta)$ is the \textbf{amplification factor} and $\hat{v}(t,\xi) = g(\zeta)^n
 \end{itemize}
 Dissipation and dispersion in the finite difference scheme can occur even if the PDE has not these characteristics.
 \end{frame}
-\section{Advection equation}
 \begin{frame}
 \frametitle{Advection equation}
 Consider the advection equation equipped with initial and boundary condition:
@@ -119,19 +118,42 @@ U_j^{n+1} =
 where $\nu = a \displaystyle{\frac{\tau}{h}}, \ n = 0, ..., N_t - 1$
 \end{frame}
 \begin{frame}
-Amplification factor is $(1 - \nu) + \nu e^{-\iota \xi h}$ for $a > 0$:
+Amplification factor for $a > 0$ is $g(\zeta) = (1 - \nu) + \nu e^{-\iota \xi h}$:
 \begin{itemize}
-\item $ \|g(\xi)\| \ \leq \ 1 \ \forall \ \xi \iff  0 \leq |\nu| \leq 1$
-\item Upwind is dissipative
+\item $ \|g\| \ \leq \ 1 \ \forall \ \xi \iff  0 \leq |\nu| \leq 1$
+\item Dissipative scheme
+\item Monotone scheme: if $\nu \leq 1 \ \Rightarrow \ \max_j{|v_j^{n+1}|} \leq \max_j{|v_j^n|}$
+\item $Arg(g) = \displaystyle{-\tan^{-1}\left(\frac{\nu \sin{\xi h}}{(1 - \nu) + \nu \cos{\xi h}}\right)}$
 \end{itemize}
 \end{frame}
 \begin{frame}
-monotone
+Dissipation can be explained also as follows:
+\begin{align*}
+0 \ = \ & \frac{U_j^{n+1} - U_j^n}{\tau} + a \frac{U_j^n - U_{j-1}^n}{h} = \\
+= \ & \frac{U_j^{n+1} - U_j^n}{\tau} + a \frac{U_{j+1}^n - U_{j-1}^n}{2h} - \frac{a * h}{2}\frac{U_{j+1}^n -2U_j^n + U_{j-1}^n}{h^2}
+\end{align*}
+i.e. it is a difference scheme for the parabolic PDE
+\begin{align*}
+u_t + a u_x - \frac{a h}{2}u_{xx} = 0
+\end{align*}
+So upwind scheme pollutes PDE with artificial diffusion.
+\end{frame}
+\section{Lax-Wendroff}
+\begin{frame}
+\frametitle{Lax-Wendroff}
+It takes the form
+\begin{align*}
+U_j^{n+1} = \frac{1}{2}\nu(1 + \nu)U_{j-1}^n + (1 - \nu^2)U_j^n - \frac{1}{2}\nu(1 - \nu)U_{j+1}^n
+\end{align*}
+With amplification factor
+\begin{align*}
+g(\zeta) = 1 - 2 \eta^2\sin^2{\frac{1}{2}\zeta} - \iota \eta \sin{\zeta}
+\end{align*}
 \end{frame}
 \begin{frame}
-phase lag
-\end{frame}
-\begin{frame}
-modified pde
+\begin{itemize}
+\item $|g|^2 = 1 - 4\nu^2(1-\nu^2)\sin^4{\frac{1}{2}\zeta} \ \leq 1 \iff |\nu| \leq 1$ \\ Order of amplitude error $\zeta^4$ when $\zeta = h\xi$ small
+\item $Arg(g) = \displaystyle{-\tan^{-1}{\frac{\nu \sin{\zeta}}{1 - 2\nu^2\sin^2{\frac{1}{2}\zeta}}}}$
+\end{itemize}
 \end{frame}
 \end{document}
