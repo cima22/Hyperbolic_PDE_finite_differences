@@ -61,7 +61,7 @@ If: \begin{itemize}
 \item PDE has constant coefficients
 \item Problem is defined on infinte mesh or has periodic boundary conditions
 \end{itemize}
-Can perform a Fourier analysis of how the difference scheme acts on the initial condition. \\ If $\hat{v}(t,\xi)$ is Fourier transform of the solution, we have
+Can perform a Fourier analysis of how the difference scheme acts on the initial condition. \\ If $\hat{v}(t,\xi)$ is Fourier transform of the solution and $\iota = \sqrt{-1}$, we have
 \begin{align*}
 v(t,x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t,\xi)d\xi
 \end{align*}
@@ -78,8 +78,10 @@ $\zeta = \xi h, \ \tau = \frac{T_f}{N_t}, \ h = \frac{b - a}{N_x}$
 \begin{frame}
 $g(\zeta)$ is the \textbf{amplification factor} and $\hat{v}(t,\xi) = g(\zeta)^n\hat{v}(0,\xi)$
 \begin{itemize}
+\setlength\itemsep{1em}
 \item $\|g\| \Rightarrow$ analysis of dissipation of wave numbers
 \item $Arg(g) \Rightarrow$ analysis of dispersion of wave numbers
+\item If the PDE has $s$ components than $g$ is an $s \times s$ \textbf{amplification matrix} $G$. Dissipation and dispersion studied via the eigenvalues of $G$.
 \end{itemize}
 Dissipation and dispersion in the finite difference scheme can occur even if the PDE has not these characteristics.
 \end{frame}
@@ -122,11 +124,22 @@ where $\nu = a \displaystyle{\frac{\tau}{h}}, \ n = 0, ..., N_t - 1$
 \begin{frame}
 Amplification factor for $a > 0$ is $g(\zeta) = (1 - \nu) + \nu e^{-\iota \xi h}$:
 \begin{itemize}
+\setlength\itemsep{1em}
 \item $ \|g\| \ \leq \ 1 \ \forall \ \xi \iff  0 \leq |\nu| \leq 1$
 \item Dissipative scheme
 \item Monotone scheme: if $\nu \leq 1 \ \Rightarrow \ \max_j{|v_j^{n+1}|} \leq \max_j{|v_j^n|}$
+\\ $\Rightarrow$ stability even if $a = a(x,t) \iff |a_j^n \frac{\tau}{h}| \leq 1$
 \item $Arg(g) = \displaystyle{-\tan^{-1}\left(\frac{\nu \sin{\xi h}}{(1 - \nu) + \nu \cos{\xi h}}\right)}$
 \end{itemize}
+\end{frame}
+\begin{frame}
+PDE admits plane-wave solutions of the form
+\begin{align*}
+u(t,x) = e^{\iota(\xi x + \omega t)}
+\end{align*}
+where $\xi = $ wave number, $\omega = $ frequency. \\
+PDE imposes the \textbf{dispersion relation} $\omega = \omega(\xi)$ and \textbf{phase velocity} $c = \frac{\omega}{\xi}$. e.g. Advection eq. imposes $\omega = -a\xi$ and $c = -a$ independent on wave number. \\
+To study dispersion, we can study the ratio $\phi_e = \frac{Arg(g)}{\omega}$
 \end{frame}
 \begin{frame}
 \includegraphics[width=\textwidth]{up_g}
@@ -150,13 +163,23 @@ It takes the form
 \begin{align*}
 U_j^{n+1} = \frac{1}{2}\nu(1 + \nu)U_{j-1}^n + (1 - \nu^2)U_j^n - \frac{1}{2}\nu(1 - \nu)U_{j+1}^n
 \end{align*}
-With amplification factor
+Can be rewritten as 
+\begin{align*}
+\frac{U_i^{n+1} - U_i^n}{\tau} + a \frac{U_{i+1}^n - U_{i-1}^n}{2h} - \frac{\tau a^2}{2}\frac{U_{i+1}^n -2U_i^n + U_{i-1}^n}{h^2} = 0
+\end{align*}
+So it approximates the PDE $u_t + au_x = \frac{\tau a^2}{2}u_{xx}$. Comparing with upwind:
+\begin{align*}
+\frac{|a|}{2} = \frac{|a|\tau}{2 \nu} = \frac{a^2 \tau}{2 |a| \nu} \geq \frac{a^2 \tau}{2}
+\end{align*}
+So LW expected to be less dissipative.
+\end{frame}
+\begin{frame}
+Amplification factor
 \begin{align*}
 g(\zeta) = 1 - 2 \eta^2\sin^2{\frac{1}{2}\zeta} - \iota \eta \sin{\zeta}
 \end{align*}
-\end{frame}
-\begin{frame}
 \begin{itemize}
+\setlength\itemsep{1em}
 \item $|g|^2 = 1 - 4\nu^2(1-\nu^2)\sin^4{\frac{1}{2}\zeta} \ \leq 1 \iff |\nu| \leq 1$ \\ Order of amplitude error $\zeta^4$ when $\zeta = h\xi$ small
 \item $Arg(g) = \displaystyle{-\tan^{-1}{\frac{\nu \sin{\zeta}}{1 - 2\nu^2\sin^2{\frac{1}{2}\zeta}}}}$
 \end{itemize}
@@ -165,15 +188,21 @@ g(\zeta) = 1 - 2 \eta^2\sin^2{\frac{1}{2}\zeta} - \iota \eta \sin{\zeta}
 \includegraphics[width=\textwidth]{lw_g}
 \end{frame}
 \begin{frame}
-talk about phase lag of lw and numerical $u_{xxx}$
+\frametitle{Lax-Wendroff with variable coefficient}
+Now $a = a(x,t)$
 \end{frame}
+\section{Leap-frog}
 \begin{frame}
-variable coeff up and lw
-\end{frame}
-\begin{frame}
-leap frog and box?
+\frametitle{Leap-frog scheme}
+\begin{align*}
+\frac{U_j^{n+1} - U_j^{n-1}}{2\tau} + a \frac{U_{j+1}^n-U_{j-1}^n}{2h} = 0
+\end{align*}
+\textit{Oss.:} need special procedure to obtain $U_1$, e.g. with Lax-Wendroff
 \end{frame}
 \begin{frame}
 conservation law - burgers
+\end{frame}
+\begin{frame}
+bibliography
 \end{frame}
 \end{document}
