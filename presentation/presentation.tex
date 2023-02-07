@@ -17,7 +17,6 @@
 \tableofcontents
 \end{frame}
 \section{Hyperbolic problems}
-\subsection{What is an hyperbolic problem?}
 \begin{frame}
 Usually transport wave-like phenomena with finite speed of propagation. Examples:
 \begin{itemize}
@@ -38,7 +37,6 @@ u_t + (f(u))_x = 0 \Rightarrow u_t + A(u)u_x = 0
 \end{align*}
  where $A(u) = \frac{\partial f}{\partial u}$.
 \end{frame}
-\subsection{Some comments}
 \begin{frame}
 \begin{itemize}
   \item There is no dissipation: $\lVert u(t,\cdot) \rVert_{L_2} = \lVert u_0\rVert_{L_2}$
@@ -204,6 +202,42 @@ Fourier analysis gives
 \begin{align*}
 g(\zeta) = -\iota\nu\sin{\zeta} \pm \sqrt{1 - \nu^2\sin^2{\zeta}}
 \end{align*}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item $|g|^2 = 1 \iff \nu \leq 1 \ \Rightarrow$ no dissipation
+\item Presence of two solutions $\Rightarrow$ spurious solution mode
+\end{itemize}
+\end{frame}
+\section{Box method}
+\begin{frame}
+\frametitle{A finite volume scheme - Box method}
+Suppose conservation law $u_t + f(u)_x = 0$ and integrate it over a region $\Omega = [t_n,t_{n+1}] \times [x_j,x_{j+1}]$. Gauss divercence theorem gives
+\begin{align*}
+\iint_\Omega(u_t + f_x)dxdt & \equiv \iint_\Omega div(f,u)dxdt \\
+& = \oint_{\partial\Omega}[fdt-udx]
+\end{align*}
+\end{frame}
+\begin{frame}
+Approximating the integral with the trapezoidal rule gives the box method:
+\begin{align*}
+\frac{U_{j+1}^{n+1} + U_j^{n+1} - U_{j + 1}^n - U_j^n}{2\tau} + \frac{F_{j+1}^{n+1} + F_{j+1}^n - F_j^{n+1} - F_j^n}{2h} = 0
+\end{align*}
+For the advection equation $f = au$ and the method becomes:
+\begin{align*}
+U_{j+1}^{n+1} = U_j^n + (1 + \nu)^{-1}(1 - \nu)(U_{j+1}^n - U_j^{n+1})
+\end{align*}
+where  $\nu =  a\frac{\tau}{h}$
+\end{frame}
+\begin{frame}
+Amplification factor $g(\zeta) = \frac{\cos{\frac{1}{2}\zeta} - \iota\nu\sin{\frac{1}{2}\zeta}}{\cos{\frac{1}{2}\zeta} + \iota\nu\sin{\frac{1}{2}\zeta}}$:
+\begin{itemize}
+\setlength\itemsep{1em}
+\item $|g| = 1 \ \forall \ \nu \ \Rightarrow$ unconditionally stable, no dissipation
+\item $Arg(g) = -2\tan^{-1}{\nu\tan{\frac{1}{2}\zeta}}$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\includegraphics[width=\textwidth]{lp_bx_lag}
 \end{frame}
 \begin{frame}
 conservation law - burgers
