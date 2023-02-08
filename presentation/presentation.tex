@@ -1,6 +1,7 @@
 \documentclass{beamer}
 \usepackage{bm}
 \usepackage{graphicx}
+\usepackage{cancel}
 %\graphicspath{ {./images/} }
 \usetheme{Darmstadt}
 \title{Dissipation and dispersion in finite difference solutions of hyperbolic PDEs}
@@ -143,16 +144,18 @@ To study dispersion, we can study the ratio $\phi_e = \frac{Arg(g)}{\omega}$
 \includegraphics[width=\textwidth]{up_g}
 \end{frame}
 \begin{frame}
-Dissipation can be explained also as follows:
+Dissipation can be explained using the truncation error:
 \begin{align*}
-0 \ = \ & \frac{U_j^{n+1} - U_j^n}{\tau} + a \frac{U_j^n - U_{j-1}^n}{h} = \\
-= \ & \frac{U_j^{n+1} - U_j^n}{\tau} + a \frac{U_{j+1}^n - U_{j-1}^n}{2h} - \frac{a * h}{2}\frac{U_{j+1}^n -2U_j^n + U_{j-1}^n}{h^2}
+\frac{u(t+\tau,x) - u(t,x)}{\tau} = u_t + \frac{\tau}{2}u_{tt} + O(\tau^2)
+\\
+\frac{u(t,x + h) - u(t,x)}{h} = u_x + \frac{h}{2}u_{xx} + O(h^2)
 \end{align*}
-i.e. it is a difference scheme for the parabolic PDE
+Thus using $u_t = -au_x$ and $u_{tt} = a^2u_{xx}$ and writing the upwind scheme:
 \begin{align*}
-u_t + a u_x - \frac{a h}{2}u_{xx} = 0
+& \frac{u(t+\tau,x) - u(t,x)}{\tau} + a\frac{u(t,x + h) - u(t,x)}{h} = \\
+& = \left(\frac{\tau a^2}{2}+ \frac{ha}{2}\right) u_{xx} + O(\tau^2,h^2) 
 \end{align*}
-So upwind scheme pollutes PDE with artificial diffusion.
+So upwind is order 2 approximation of the dissipative PDE $u_t +au_x + \left(\frac{\tau a^2}{2}+ \frac{ha}{2}\right) u_{xx} = 0$
 \end{frame}
 \section{Lax-Wendroff}
 \begin{frame}
@@ -161,15 +164,10 @@ It takes the form
 \begin{align*}
 U_j^{n+1} = \frac{1}{2}\nu(1 + \nu)U_{j-1}^n + (1 - \nu^2)U_j^n - \frac{1}{2}\nu(1 - \nu)U_{j+1}^n
 \end{align*}
-Can be rewritten as 
+or
 \begin{align*}
-\frac{U_i^{n+1} - U_i^n}{\tau} + a \frac{U_{i+1}^n - U_{i-1}^n}{2h} - \frac{\tau a^2}{2}\frac{U_{i+1}^n -2U_i^n + U_{i-1}^n}{h^2} = 0
+\frac{U_j^{n+1} - U_j^n}{\tau} + a \frac{U_{j+1}^n -U_{j-1}^n}{2h} -\frac{a^2\tau}{2}\frac{U_{j+1}^n -2U_j^n+U_{j-1}^n}{h^2}
 \end{align*}
-So it approximates the PDE $u_t + au_x = \frac{\tau a^2}{2}u_{xx}$. Comparing with upwind:
-\begin{align*}
-\frac{|a|}{2} = \frac{|a|\tau}{2 \nu} = \frac{a^2 \tau}{2 |a| \nu} \geq \frac{a^2 \tau}{2}
-\end{align*}
-So LW expected to be less dissipative.
 \end{frame}
 \begin{frame}
 Amplification factor
@@ -184,6 +182,32 @@ g(\zeta) = 1 - 2 \eta^2\sin^2{\frac{1}{2}\zeta} - \iota \eta \sin{\zeta}
 \end{frame}
 \begin{frame}
 \includegraphics[width=\textwidth]{lw_g}
+\end{frame}
+\begin{frame}
+Modified PDE analysis:
+\begin{align*}
+\frac{u(t+\tau,x) - u(t,x)}{\tau} & = u_t + \frac{\tau}{2}u_{tt} + \frac{\tau^2}{6}u_{ttt} + O(\tau^3) \\
+\frac{u(t,x + h) - u(t,x-h)}{2h} & = u_x + \frac{h^2}{6}u_{xxx} + O(h^4) \\
+\frac{u(t,x+h) - 2u(t,x) + u(t,x-h)}{h^2} & = u_{xx} + O(h^2)
+\end{align*}
+Thus the truncation error of the Lax-Wendroff scheme might be read as:
+\begin{align*}
+& \frac{U_j^{n+1} - U_j^n}{\tau} + a \frac{U_{j+1}^n -U_{j-1}^n}{2h} -\frac{a^2\tau}{2}\frac{U_{j+1}^n -2U_j^n+U_{j-1}^n}{h^2} = \\
+& = u_t + \frac{\tau}{2}u_{tt} + \frac{\tau^2}{6}u_{ttt} + au_x + a\frac{h^2}{6}u_{xxx} - \frac{a^2\tau}{2} u_{xx} + O(\tau^3,h^2)
+\end{align*}
+\end{frame}
+\begin{frame}
+thus using $u_t = -au_x$, $u_{tt} = a^2u_{xx}$ and $u_{ttt} = -a^3u_{xxx}$ we obtain:
+\begin{align*}
+& = \cancel{-au_x} + \cancel{\frac{a^2\tau}{2}u_{xx}} -\frac{\tau^2a^3}{6}u_{xxx} + \cancel{au_x} + a\frac{h^2}{6}u_{xxx} - \cancel{\frac{a^2\tau}{2} u_{xx}} + O(\tau^3,h^2) = \\
+& = (\frac{ah^2}{6} - \frac{\tau^2a^3}{6})u_{xxx} + O(\tau^3,h^2) = \\
+& = -\frac{ah^2}{6}(1-\mu^2a^2)u_{xxx} + O(\tau^3,h^2), \ \mu = \frac{\tau}{h}
+\end{align*}
+So Lax-Wendroff approximates with an higher order the PDE
+\begin{align*}
+u_t + au_x +\frac{ah^2}{6}(1-\mu^2a^2)u_{xxx}
+\end{align*}
+Which is \textbf{dispersive}.
 \end{frame}
 \begin{frame}
 \frametitle{Lax-Wendroff with variable coefficient}
