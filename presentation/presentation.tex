@@ -19,8 +19,10 @@
 \end{frame}
 \section{Hyperbolic problems}
 \begin{frame}
+\frametitle{Hyperbolic problems}
 Usually transport wave-like phenomena with finite speed of propagation. Examples:
 \begin{itemize}
+\setlength\itemsep{1em}
   \item 1d transport/advection eq. $u_t + a u_x = 0$
   \item Conservation laws $u_t + (f(u))_x = 0$
   \item Wave eq. $u_{tt} + cu_{xx} = 0$
@@ -42,7 +44,7 @@ u_t + (f(u))_x = 0 \Rightarrow u_t + A(u)u_x = 0
 \begin{itemize}
   \item There is no dissipation: $\lVert u(t,\cdot) \rVert_{L_2} = \lVert u_0\rVert_{L_2}$
   \item Information propagates at finite speed
-  \item Discontinuites in initial data is propagated $\Rightarrow$ discontinue solution
+  \item Discontinuites in initial data are propagated $\Rightarrow$ discontinue solution
   \item CFL condition necessary for convergence of a finite difference scheme
 \end{itemize}
 \end{frame}
@@ -211,7 +213,28 @@ Which is \textbf{dispersive}.
 \end{frame}
 \begin{frame}
 \frametitle{Lax-Wendroff with variable coefficient}
-Now $a = a(x,t)$
+Now $a = a(x,t) \Rightarrow$ Fourier analysis not possible $\Rightarrow$ can freeze coefficients in constant values in the range of
+the actual coefficient functions $\Rightarrow$ check stability of freezed coefficients. \\
+But how can be sure that scheme is stable? \\
+\textit{Def.:} Difference scheme is \textbf{dissipative} of order $2r$ if $\exists \ \delta > 0$ such that $\forall$ freezed coefficient schemes $G(\zeta)$ satisfy:
+\begin{align*}
+\rho(G(\zeta)) \leq e^{\tilde{\alpha}\tau}(1-\delta|\zeta|^{2r}) \ \forall \ |\zeta| \leq \pi
+\end{align*}
+For hyperbolic PDEs $\tilde{\alpha} = 0$
+\end{frame}
+\begin{frame}
+\textbf{Theorem:} If the linear PDE is well-posed and the difference method consistent, dissipative of order $2r$ and has coefficients that are Lipschitz continuous in x and t, then the scheme is stable if:
+\begin{itemize}
+\setlength\itemsep{1em}
+\item PDE is strictly hyperbolic (i.e. $u_t + Au_x = 0$ where A has real dinstinct eigenvalues)
+\item PDE is symmetric hyperbolic and difference scheme is symmetric and accurate of order at least $2r- 2$
+\end{itemize}
+If $\frac{\tau}{h}max(a_l) = \mu max(a_l) < 1$, amplification matrix of LW $G$ gives:
+\begin{align*}
+|\lambda_l(\zeta)| \leq 1- \delta_l|\zeta|^4 \\
+\delta_l = \frac{1}{4}\mu^2|a_l|^2(1-\mu^2|a_l|^2)
+\end{align*}
+Thus for the theorem LW is strictly dissipative and hence stable.
 \end{frame}
 \section{Leap-frog}
 \begin{frame}
@@ -219,7 +242,7 @@ Now $a = a(x,t)$
 \begin{align*}
 \frac{U_j^{n+1} - U_j^{n-1}}{2\tau} + a \frac{U_{j+1}^n-U_{j-1}^n}{2h} = 0
 \end{align*}
-\textit{Oss.:} need special procedure to obtain $U_1$, e.g. with Lax-Wendroff \\
+\textit{Oss.:} need special procedure to obtain $U_1$, e.g. with Lax-Wendroff.
 \end{frame}
 \begin{frame}
 Fourier analysis gives
@@ -253,7 +276,7 @@ U_{j+1}^{n+1} = U_j^n + (1 + \nu)^{-1}(1 - \nu)(U_{j+1}^n - U_j^{n+1})
 where  $\nu =  a\frac{\tau}{h}$
 \end{frame}
 \begin{frame}
-Amplification factor $g(\zeta) = \frac{\cos{\frac{1}{2}\zeta} - \iota\nu\sin{\frac{1}{2}\zeta}}{\cos{\frac{1}{2}\zeta} + \iota\nu\sin{\frac{1}{2}\zeta}}$:
+Amplification factor $g(\zeta) = \displaystyle{\frac{\cos{\frac{1}{2}\zeta} - \iota\nu\sin{\frac{1}{2}\zeta}}{\cos{\frac{1}{2}\zeta} + \iota\nu\sin{\frac{1}{2}\zeta}}}$:
 \begin{itemize}
 \setlength\itemsep{1em}
 \item $|g| = 1 \ \forall \ \nu \ \Rightarrow$ unconditionally stable, no dissipation
@@ -264,7 +287,7 @@ Amplification factor $g(\zeta) = \frac{\cos{\frac{1}{2}\zeta} - \iota\nu\sin{\fr
 \includegraphics[width=\textwidth]{lp_bx_lag}
 \end{frame}
 \begin{frame}
-conservation law - burgers
+cons law - burgers
 \end{frame}
 \begin{frame}
 bibliography
