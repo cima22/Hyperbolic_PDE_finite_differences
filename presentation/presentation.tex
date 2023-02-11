@@ -2,6 +2,7 @@
 \usepackage{bm}
 \usepackage{graphicx}
 \usepackage{cancel}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
 %\graphicspath{ {./images/} }
 \usetheme{Darmstadt}
 \title{Dissipation and dispersion in finite difference solutions of hyperbolic PDEs}
@@ -27,8 +28,6 @@ Usually transport wave-like phenomena with finite speed of propagation. Examples
   \item Conservation laws $u_t + (f(u))_x = 0$
   \item Wave eq. $u_{tt} + cu_{xx} = 0$
 \end{itemize}
-\cite{doi:10.1137/1.9780898718911}
-\bibliography{bibliography}
 \end{frame}
 \begin{frame}
 All of the prevoius can be grouped with the general tranport system of equations:
@@ -85,6 +84,7 @@ $g(\zeta)$ is the \textbf{amplification factor} and $\hat{v}(t,\xi) = g(\zeta)^n
 \item $\|g\| \Rightarrow$ analysis of dissipation of wave numbers
 \item $Arg(g) \Rightarrow$ analysis of dispersion of wave numbers
 \item If the PDE has $s$ components than $g$ is an $s \times s$ \textbf{amplification matrix} $G$. Dissipation and dispersion studied via the eigenvalues of $G$.
+\cite{doi:10.1137/1.9780898718911}
 \end{itemize}
 Dissipation and dispersion in the finite difference scheme can occur even if the PDE has not these characteristics.
 \end{frame}
@@ -145,6 +145,7 @@ PDE imposes the \textbf{dispersion relation} $\omega = \omega(\xi)$ and \textbf{
 To study dispersion, we can study the ratio $\phi_e = \frac{Arg(g)}{\omega}$
 \end{frame}
 \begin{frame}
+\cite{ebook}
 \includegraphics[width=\textwidth]{up_g}
 \end{frame}
 \begin{frame}
@@ -185,6 +186,7 @@ g(\zeta) = 1 - 2 \eta^2\sin^2{\frac{1}{2}\zeta} - \iota \eta \sin{\zeta}
 \end{itemize}
 \end{frame}
 \begin{frame}
+\cite{ebook}
 \includegraphics[width=\textwidth]{lw_g}
 \end{frame}
 \begin{frame}
@@ -210,6 +212,7 @@ thus using $u_t = -au_x$, $u_{tt} = a^2u_{xx}$ and $u_{ttt} = -a^3u_{xxx}$ we ob
 So Lax-Wendroff approximates with an higher order the PDE
 \begin{align*}
 u_t + au_x +\frac{ah^2}{6}(1-\mu^2a^2)u_{xxx}
+\cite{doi:10.1137/1.9780898718911}
 \end{align*}
 Which is \textbf{dispersive}.
 \end{frame}
@@ -236,7 +239,7 @@ If $\frac{\tau}{h}max(a_l) = \mu max(a_l) < 1$, amplification matrix of LW $G$ g
 |\lambda_l(\zeta)| \leq 1- \delta_l|\zeta|^4 \\
 \delta_l = \frac{1}{4}\mu^2|a_l|^2(1-\mu^2|a_l|^2)
 \end{align*}
-Thus for the theorem LW is strictly dissipative and hence stable.
+Thus for the theorem LW is strictly dissipative and hence stable. \cite{doi:10.1137/1.9780898718911}
 \end{frame}
 \section{Leap-frog}
 \begin{frame}
@@ -286,12 +289,12 @@ Amplification factor $g(\zeta) = \displaystyle{\frac{\cos{\frac{1}{2}\zeta} - \i
 \end{itemize}
 \end{frame}
 \begin{frame}
+\cite{morton1994numerical}
 \includegraphics[width=\textwidth]{lp_bx_lag}
 \end{frame}
 \begin{frame}
-cons law - burgers
-\end{frame}
-\begin{frame}
-bibliography
+\frametitle{References}
+\bibliographystyle{plain}
+\bibliography{bibliography}
 \end{frame}
 \end{document}
