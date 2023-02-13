@@ -52,7 +52,7 @@ u_t + (f(u))_x = 0 \Rightarrow u_t + A(u)u_x = 0
 \section{Finite differences}
 \begin{frame}
 \frametitle{Finite differences}
-If the PDE is defined in a domain $I \times \Omega$ where $I$ is the time interval $[0, T_f]$ and $\Omega$ is the space domain of one variable $[a,b]$, we can discretize the PDE domain with $N_t \times N_x$ points. We can than define a general explicit difference scheme at time $t = t_n$ as
+If the PDE is defined in a domain $I \times \Omega$ where $I$ is the time interval $[0, T_f]$ and $\Omega$ is the space domain of one variable $[a,b]$, we can discretize the PDE domain with $N_t \times N_x$ points. We can than define a general explicit difference scheme at time $t = n * \tau$ as
 \begin{align*}
 v_j^{n+1} = \sum_{i = -l}^r \beta_i v_{j+i}^n
 \end{align*}
@@ -71,8 +71,9 @@ v(t,x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t,\xi
 \begin{frame}
 The difference scheme gives
 \begin{align*}
-\int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t + \tau,\xi)d\xi = & \sum_{i=-l}^{r}\beta_i\int_{-\infty}^{\infty}e^{\iota\xi (x + ih)}\hat{v}(t,\xi)d\xi \\
-= & \int_{-\infty}^{\infty} \left(\sum_{i=-l}^{r}\beta_i e^{\iota\xi ih}\right) e^{\iota \xi x}\hat{v}(t,\xi)d\xi \\
+v(t + \tau, x) = \ & \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{\iota\xi x}\hat{v}(t + \tau,\xi)d\xi =  \\ 
+= \ & \frac{1}{\sqrt{2\pi}}\sum_{i=-l}^{r}\beta_i\int_{-\infty}^{\infty}e^{\iota\xi (x + ih)}\hat{v}(t,\xi)d\xi = \\
+= \ & \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{\iota \xi x} \left(\sum_{i=-l}^{r}\beta_i e^{\iota\xi ih}\right)\hat{v}(t,\xi)d\xi \\
 \sum_{i=-l}^{r}\beta_i e^{\iota\xi ih} = g(\zeta) \ \Rightarrow & \ \hat{v}(t + \tau, \xi) = g(\zeta)\hat{v}(t,\xi)
 \end{align*}
 $\zeta = \xi h, \ \tau = \frac{T_f}{N_t}, \ h = \frac{b - a}{N_x}$
@@ -177,7 +178,7 @@ or
 \begin{frame}
 Amplification factor
 \begin{align*}
-g(\zeta) = 1 - 2 \eta^2\sin^2{\frac{1}{2}\zeta} - \iota \eta \sin{\zeta}
+g(\zeta) = 1 - 2 \nu^2\sin^2{\frac{1}{2}\zeta} - \iota \nu \sin{\zeta}
 \end{align*}
 \begin{itemize}
 \setlength\itemsep{1em}
