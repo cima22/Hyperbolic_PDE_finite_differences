@@ -8,7 +8,7 @@
 \title{Dissipation and dispersion in finite difference solutions of hyperbolic PDEs}
 \subtitle{Numerical solutions of PDEs}
 \author{Gabriele Cimador}
-\institute{Data Science and Scientific computing at Università di Trieste}
+\institute{Data Science and Scientific Computing at Università di Trieste}
 \date{\today}
 \begin{document}
 \begin{frame}
@@ -146,7 +146,7 @@ PDE imposes the \textbf{dispersion relation} $\omega = \omega(\xi)$ and \textbf{
 To study dispersion, we can study the ratio $\phi_e = \frac{Arg(g)}{\omega}$
 \end{frame}
 \begin{frame}
-\cite{ebook}
+\cite{morton1994numerical}
 \includegraphics[width=\textwidth]{up_g}
 \end{frame}
 \begin{frame}
@@ -187,7 +187,7 @@ g(\zeta) = 1 - 2 \nu^2\sin^2{\frac{1}{2}\zeta} - \iota \nu \sin{\zeta}
 \end{itemize}
 \end{frame}
 \begin{frame}
-\cite{ebook}
+\cite{morton1994numerical}
 \includegraphics[width=\textwidth]{lw_g}
 \end{frame}
 \begin{frame}
@@ -266,7 +266,7 @@ g(\zeta) = -\iota\nu\sin{\zeta} \pm \sqrt{1 - \nu^2\sin^2{\zeta}}
 \frametitle{A finite volume scheme - Box method}
 Suppose conservation law $u_t + f(u)_x = 0$ and integrate it over a region $\Omega = [t_n,t_{n+1}] \times [x_j,x_{j+1}]$. Gauss divercence theorem gives
 \begin{align*}
-\iint_\Omega(u_t + f_x)dxdt & \equiv \iint_\Omega div(f,u)dxdt \\
+0 =\iint_\Omega(u_t + f_x)dxdt & \equiv \iint_\Omega div(f,u)dxdt \\
 & = \oint_{\partial\Omega}[fdt-udx]
 \end{align*}
 \end{frame}
